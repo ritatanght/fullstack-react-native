@@ -1,15 +1,29 @@
+import { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
-export default function SearchInput({ placeholder }) {
+export default function SearchInput({ placeholder, onSubmit }) {
+  const [text, setText] = useState('');
+
+  const handleChangeText = (text) => setText(text);
+
+  const handleSubmitEditing = () => {
+    if (!text) return;
+    onSubmit(text);
+    setText('');
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
         autoCorrect={false}
+        value={text}
         placeholder={placeholder}
         placeholderTextColor="white"
         underlineColorAndroid="transparent"
         style={styles.textInput}
         clearButtonMode="always"
+        onChangeText={handleChangeText}
+        onSubmitEditing={handleSubmitEditing}
       />
     </View>
   );
