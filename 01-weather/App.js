@@ -5,16 +5,40 @@ import {
   KeyboardAvoidingView,
   Platform,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import getImageForWeather from './utils/getImageForWeather';
+import { fetchLocationId, fetchWeather } from './utils/api';
 import SearchInput from './components/SearchInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function App() {
-  const [location, setLocation] = useState('San Francisco');
+  const [location, setLocation] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [temperature, setTemperature] = useState(0);
+  const [weather, setWeather] = useState('');
 
-  const handleUpdateLocation = (city) => setLocation(city);
+  useEffect(() => {
+    setLocation('San Francisco');
+  }, []);
 
+  const handleUpdateLocation = async (city) => {
+    if (!city) return;
+    setLoading(true);
+    try {
+      const locationId = await fetchLocationId(city);
+      const { location, weather, temperature } = await fetchWeather(locationId);
+      setError(false);
+      setLocation(location);
+      setWeather(weather);
+      setTemperature(temperature);
+    } catch (e) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground
