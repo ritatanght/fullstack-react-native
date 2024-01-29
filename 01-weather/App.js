@@ -6,6 +6,7 @@ import {
   Platform,
   ImageBackground,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import getImageForWeather from './utils/getImageForWeather';
 import { fetchLocationId, fetchWeather } from './utils/api';
@@ -41,20 +42,42 @@ export default function App() {
   };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <StatusBar barStyle="light-content" />
       <ImageBackground
-        source={getImageForWeather('Clear')}
+        source={getImageForWeather(weather)}
         style={styles.imageContainer}
         imageStyle={styles.image}
       >
         <View style={styles.detailsContainer}>
-          <Text style={[styles.largeText, styles.textStyle]}>{location}</Text>
-          <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
-          <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
+          <ActivityIndicator animating={loading} color="white" size="large" />
 
-          <SearchInput
-            placeholder="Search any city"
-            onSubmit={handleUpdateLocation}
-          />
+          {!loading && (
+            <View>
+              {error && (
+                <Text style={[styles.smallText, styles.textStyle]}>
+                  Could not load weather, please try a different city.
+                </Text>
+              )}
+
+              {!error && (
+                <View>
+                  <Text style={[styles.largeText, styles.textStyle]}>
+                    {location}
+                  </Text>
+                  <Text style={[styles.smallText, styles.textStyle]}>
+                    {weather}
+                  </Text>
+                  <Text style={[styles.largeText, styles.textStyle]}>
+                    {`${Math.round(temperature)}°`}
+                  </Text>
+                </View>
+              )}
+              <SearchInput
+                placeholder="Search any city"
+                onSubmit={handleUpdateLocation}
+              />
+            </View>
+          )}
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
