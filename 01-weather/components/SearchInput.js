@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default function SearchInput({ placeholder, onSubmit }) {
   const [text, setText] = useState('');
@@ -43,3 +44,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+SearchInput.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
+SearchInput.defaultProps = {
+  placeholder: '',
+};
