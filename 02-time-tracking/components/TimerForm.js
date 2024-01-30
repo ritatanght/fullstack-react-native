@@ -6,10 +6,16 @@ export default function TimerForm({
   id,
   title: titleText,
   project: projectText,
+  onFormSubmit,
+  onFormClose,
 }) {
   const [title, setTitle] = useState(id ? titleText : "");
   const [project, setProject] = useState(id ? projectText : "");
   const submitText = id ? "Update" : "Create";
+
+  const handleSubmit = () => {
+    onFormSubmit({ id, title, project });
+  };
   return (
     <View style={styles.formContainer}>
       <View style={styles.attributeContainer}>
@@ -35,8 +41,18 @@ export default function TimerForm({
         </View>
       </View>
       <View style={styles.buttonGroup}>
-        <TimerButton small color="#21BA45" title={submitText} />
-        <TimerButton small color="#DB2828" title="Cancel" />
+        <TimerButton
+          small
+          color="#21BA45"
+          title={submitText}
+          onPress={handleSubmit}
+        />
+        <TimerButton
+          small
+          color="#DB2828"
+          title="Cancel"
+          onPress={onFormClose}
+        />
       </View>
     </View>
   );
