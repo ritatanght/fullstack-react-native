@@ -1,6 +1,6 @@
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from "uuid";
 
-export const millisecondsToHuman = ms => {
+export const millisecondsToHuman = (ms) => {
   const seconds = Math.floor((ms / 1000) % 60);
   const minutes = Math.floor((ms / 1000 / 60) % 60);
   const hours = Math.floor(ms / 1000 / 60 / 60);
@@ -9,7 +9,7 @@ export const millisecondsToHuman = ms => {
     pad(hours.toString(), 2),
     pad(minutes.toString(), 2),
     pad(seconds.toString(), 2),
-  ].join(':');
+  ].join(":");
 
   return humanized;
 };
@@ -24,8 +24,8 @@ const pad = (numberString, size) => {
 
 export const newTimer = (attrs = {}) => {
   const timer = {
-    title: attrs.title || 'Timer',
-    project: attrs.project || 'Project',
+    title: attrs.title || "Timer",
+    project: attrs.project || "Project",
     id: uuidv4(),
     elapsed: 0,
     isRunning: false,
