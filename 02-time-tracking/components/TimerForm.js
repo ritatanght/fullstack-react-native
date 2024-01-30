@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, TextInput } from "react-native";
-import TimeButton from "./TimerButton";
+import TimerButton from "./TimerButton";
 
 export default function TimerForm({ id, title, project }) {
   const submitText = id ? "Update" : "Create";
