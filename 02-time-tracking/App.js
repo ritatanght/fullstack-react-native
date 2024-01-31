@@ -1,6 +1,13 @@
+import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 
 import { newTimer } from "./utils/TimerUtils";
 import EditableTimer from "./components/EditableTimer";
@@ -85,23 +92,28 @@ export default function App() {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Timers</Text>
       </View>
-      <ScrollView style={styles.timerList}>
-        <ToggleableTimerForm onFormSubmit={handleCreateFormSubmit} />
-        {timers.map(({ title, project, id, elapsed, isRunning }) => (
-          <EditableTimer
-            key={id}
-            id={id}
-            title={title}
-            project={project}
-            elapsed={elapsed}
-            isRunning={isRunning}
-            onFormSubmit={handleFormSubmit}
-            onRemovePress={handleRemove}
-            onStartPress={toggleTimer}
-            onStopPress={toggleTimer}
-          />
-        ))}
-      </ScrollView>
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={styles.timerListContainer}
+      >
+        <ScrollView contentContainerStyle={styles.timerList}>
+          <ToggleableTimerForm onFormSubmit={handleCreateFormSubmit} />
+          {timers.map(({ title, project, id, elapsed, isRunning }) => (
+            <EditableTimer
+              key={id}
+              id={id}
+              title={title}
+              project={project}
+              elapsed={elapsed}
+              isRunning={isRunning}
+              onFormSubmit={handleFormSubmit}
+              onRemovePress={handleRemove}
+              onStartPress={toggleTimer}
+              onStopPress={toggleTimer}
+            />
+          ))}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }
