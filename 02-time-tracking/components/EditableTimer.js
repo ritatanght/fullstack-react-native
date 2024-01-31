@@ -8,10 +8,26 @@ export default function EditableTimer({
   project,
   elapsed,
   isRunning,
+  onFormSubmit,
 }) {
   const [editFormOpen, setEditFormOpen] = useState(false);
+
+  const openForm = () => setEditFormOpen(true);
+  const closeForm = () => setEditFormOpen(false);
+  const handleSubmit = (timer) => {
+    onFormSubmit(timer);
+    closeForm();
+  };
   if (editFormOpen) {
-    return <TimerForm id={id} title={title} project={project} />;
+    return (
+      <TimerForm
+        id={id}
+        title={title}
+        project={project}
+        onFormSubmit={handleSubmit}
+        onFormClose={closeForm}
+      />
+    );
   }
   return (
     <Timer
@@ -20,6 +36,7 @@ export default function EditableTimer({
       project={project}
       elapsed={elapsed}
       isRunning={isRunning}
+      onEditPress={openForm}
     />
   );
 }
