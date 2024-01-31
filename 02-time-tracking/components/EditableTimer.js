@@ -9,6 +9,7 @@ export default function EditableTimer({
   elapsed,
   isRunning,
   onFormSubmit,
+  onRemovePress,
 }) {
   const [editFormOpen, setEditFormOpen] = useState(false);
 
@@ -18,6 +19,7 @@ export default function EditableTimer({
     onFormSubmit(timer);
     closeForm();
   };
+
   if (editFormOpen) {
     return (
       <TimerForm
@@ -37,6 +39,7 @@ export default function EditableTimer({
       elapsed={elapsed}
       isRunning={isRunning}
       onEditPress={openForm}
+      onRemovePress={onRemovePress}
     />
   );
 }

@@ -44,6 +44,10 @@ export default function App() {
       })
     );
   };
+
+  const handleRemove = (timerId) => {
+    setTimers((prevTimers) => prevTimers.filter((t) => t.id !== timerId));
+  };
   return (
     <View style={styles.appContainer}>
       <View style={styles.titleContainer}>
@@ -60,6 +64,7 @@ export default function App() {
             elapsed={elapsed}
             isRunning={isRunning}
             onFormSubmit={handleFormSubmit}
+            onRemovePress={handleRemove}
           />
         ))}
       </ScrollView>
