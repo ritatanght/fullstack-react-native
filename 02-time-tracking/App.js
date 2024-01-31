@@ -64,6 +64,22 @@ export default function App() {
   const handleRemove = (timerId) => {
     setTimers((prevTimers) => prevTimers.filter((t) => t.id !== timerId));
   };
+
+  const toggleTimer = (timerId) => {
+    setTimers((prevTimers) =>
+      prevTimers.map((timer) => {
+        const { id, isRunning } = timer;
+        if (id === timerId) {
+          return {
+            ...timer,
+            isRunning: !isRunning,
+          };
+        }
+        return timer;
+      })
+    );
+  };
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.titleContainer}>
@@ -81,6 +97,8 @@ export default function App() {
             isRunning={isRunning}
             onFormSubmit={handleFormSubmit}
             onRemovePress={handleRemove}
+            onStartPress={toggleTimer}
+            onStopPress={toggleTimer}
           />
         ))}
       </ScrollView>

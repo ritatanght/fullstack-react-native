@@ -10,6 +10,8 @@ export default function EditableTimer({
   isRunning,
   onFormSubmit,
   onRemovePress,
+  onStartPress,
+  onStopPress,
 }) {
   const [editFormOpen, setEditFormOpen] = useState(false);
 
@@ -40,6 +42,8 @@ export default function EditableTimer({
       isRunning={isRunning}
       onEditPress={openForm}
       onRemovePress={onRemovePress}
+      onStartPress={onStartPress}
+      onStopPress={onStopPress}
     />
   );
 }

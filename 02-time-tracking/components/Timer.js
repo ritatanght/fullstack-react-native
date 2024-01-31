@@ -7,13 +7,25 @@ export default function Timer({
   title,
   project,
   elapsed,
+  isRunning,
   onEditPress,
   onRemovePress,
+  onStartPress,
+  onStopPress,
 }) {
   const elapsedString = millisecondsToHuman(elapsed);
   const handleRemovePress = () => {
     onRemovePress(id);
   };
+
+  const handleStartPress = () => {
+    onStartPress(id);
+  };
+
+  const handleStopPress = () => {
+    onStopPress(id);
+  };
+
   return (
     <View style={styles.timerContainer}>
       <Text style={styles.title}>{title}</Text>
@@ -28,7 +40,11 @@ export default function Timer({
           onPress={handleRemovePress}
         />
       </View>
-      <TimerButton color="#21BA45" title="Start" />
+      {isRunning ? (
+        <TimerButton color="#DB2828" title="Stop" onPress={handleStopPress} />
+      ) : (
+        <TimerButton color="#21BA45" title="Start" onPress={handleStartPress} />
+      )}
     </View>
   );
 }
