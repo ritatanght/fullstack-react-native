@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, TextInput } from "react-native";
+import PropTypes from "prop-types";
 import TimerButton from "./TimerButton";
 import { useState } from "react";
 
@@ -92,3 +93,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+TimerForm.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  project: PropTypes.string,
+  onFormSubmit: PropTypes.func.isRequired,
+  onFormClose: PropTypes.func.isRequired,
+};
+
+TimerForm.defaultProps = {
+  id: null,
+  title: "",
+  project: "",
+};

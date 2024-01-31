@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
+import PropTypes from "prop-types";
 import { millisecondsToHuman } from "../utils/TimerUtils";
 import TimerButton from "./TimerButton";
 
@@ -74,3 +75,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+Timer.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  project: PropTypes.string.isRequired,
+  elapsed: PropTypes.number.isRequired,
+  isRunning: PropTypes.bool.isRequired,
+  onEditPress: PropTypes.func.isRequired,
+  onRemovePress: PropTypes.func.isRequired,
+  onStartPress: PropTypes.func.isRequired,
+  onStopPress: PropTypes.func.isRequired,
+};
