@@ -29,7 +29,21 @@ export default function App() {
       return [newTimer(timer), ...prevTimers];
     });
   };
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = (attrs) => {
+    setTimers((prevTimers) =>
+      prevTimers.map((timer) => {
+        if (timer.id === attrs.id) {
+          const { title, project } = attrs;
+          return {
+            ...timer,
+            title,
+            project,
+          };
+        }
+        return timer;
+      })
+    );
+  };
   return (
     <View style={styles.appContainer}>
       <View style={styles.titleContainer}>
@@ -45,6 +59,7 @@ export default function App() {
             project={project}
             elapsed={elapsed}
             isRunning={isRunning}
+            onFormSubmit={handleFormSubmit}
           />
         ))}
       </ScrollView>
