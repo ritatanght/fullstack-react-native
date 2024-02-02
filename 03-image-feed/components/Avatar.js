@@ -9,7 +9,11 @@ const Avatar = ({ size, backgroundColor, initials }) => {
     borderRadius: size / 2,
     backgroundColor,
   };
-  return <View style={[styles.container, style]}></View>;
+  return (
+    <View style={[styles.container, style]}>
+      <Text style={styles.text}>{initials}</Text>
+    </View>
+  );
 };
 
 export default Avatar;
@@ -18,6 +22,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    color: "white",
   },
 });
 
