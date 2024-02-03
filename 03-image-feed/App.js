@@ -1,13 +1,16 @@
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import Avatar from "./components/Avatar";
-
+import CardList from "./components/CardList";
+const items = [
+  { id: 0, author: "Bob Ross" },
+  { id: 1, author: "Chuck Norris" },
+];
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Avatar backgroundColor={"teal"} initials="TT" size={35} />
+      <CardList items={items} />
     </View>
   );
 }
