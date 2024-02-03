@@ -6,7 +6,6 @@ import Feed from "./screens/Feed";
 export default function App() {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
       <Feed style={styles.feed} />
     </View>
   );
