@@ -7,10 +7,17 @@ const CommentInput = ({ onSubmit, placeholder }) => {
 
   const handleChangeText = (text) => setText(text);
 
+  const handleSubmitEditing = () => {
+    if (!text) return;
+    onSubmit(text);
+    setText("");
+  };
+
   return (
     <TextInput
       value={text}
       onChangeText={handleChangeText}
+      onSubmitEditing={handleSubmitEditing}
       placeholder={placeholder}
     />
   );
