@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { MapView } from 'expo'; // comes from react-native-maps, Expo includes by default
+import MapView, { Marker } from 'react-native-maps';
 
 const keyExtractor = (item) => item.id.toString();
 const MessageList = ({ messages, onPressMessage }) => {
@@ -42,9 +42,10 @@ const MessageList = ({ messages, onPressMessage }) => {
               longitudeDelta: 0.04,
             }}
           >
-            <MapView.Marker coordinate={coordinate} />
+            <Marker coordinate={coordinate} />
           </MapView>
         );
+
       default:
         return null;
     }
