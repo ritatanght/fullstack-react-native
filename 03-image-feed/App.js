@@ -1,14 +1,31 @@
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet, View, Modal } from "react-native";
+import { Platform, StyleSheet, View, Modal, AsyncStorage } from "react-native";
 import Feed from "./screens/Feed";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Comments from "./screens/Comments";
+
+const ASYNC_STORAGE_COMMENTS_KEY = "ASYNC_STORAGE_COMMENTS_KEY";
 
 export default function App() {
   const [commentsForItem, setCommentsForItem] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
+
+  useEffect(() => {
+    const loadLocalComments = async () => {
+      try {
+        const commentsForItem = await AsyncStorage.getItem(
+          ASYNC_STORAGE_COMMENTS_KEY
+        );
+        setCommentsForItem(commentsForItem ? JSON.parse(commentsForItem) : {});
+      } catch (e) {
+        console.log("Failed to load comments");
+      }
+    };
+
+    loadLocalComments();
+  }, []);
 
   const openCommentScreen = (id) => {
     setShowModal(true);
@@ -20,13 +37,18 @@ export default function App() {
     setSelectedItemId(null);
   };
 
-  const onSubmitComment = (text) => {
+  const onSubmitComment = async (text) => {
     const comments = commentsForItem[selectedItemId] || [];
-
-    setCommentsForItem((prevComments) => ({
-      ...prevComments,
+    const updated = {
+      ...comments,
       [selectedItemId]: [...comments, text],
-    }));
+    };
+    setCommentsForItem(updated);
+    try {
+      AsyncStorage.setItem(ASYNC_STORAGE_COMMENTS_KEY, JSON.stringify(updated));
+    } catch (e) {
+      console.log("Failed to save comment", text, "for", selectedItemId);
+    }
   };
 
   return (
