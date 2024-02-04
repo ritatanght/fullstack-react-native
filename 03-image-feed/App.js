@@ -2,8 +2,13 @@ import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, View } from "react-native";
 import Feed from "./screens/Feed";
+import { useState } from "react";
 
 export default function App() {
+  const [commentsForItem, setCommentsForItem] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+
   return (
     <View style={styles.container}>
       <Feed style={styles.feed} />
