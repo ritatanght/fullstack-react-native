@@ -6,7 +6,7 @@ import { fetchImages } from "../utils/api";
 import CardList from "../components/CardList";
 import { useState, useEffect } from "react";
 
-const Feed = ({ style }) => {
+const Feed = ({ style, commentsForItem, onPressComments }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [items, setItems] = useState([]);
@@ -27,14 +27,21 @@ const Feed = ({ style }) => {
 
   if (error) return <Text>Error...</Text>;
   return (
-    <SafeAreaView>
-      <CardList items={items} />
+    <SafeAreaView style={style}>
+      <CardList
+        items={items}
+        commentsForItem={commentsForItem}
+        onPressComments={onPressComments}
+      />
     </SafeAreaView>
   );
 };
 
 Feed.PropTypes = {
   style: ViewPropTypes.style,
+  commentsForItem: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
+    .isRequired,
+  onPressComments: PropTypes.func.isRequired,
 };
 
 Feed.defaultProps = {
