@@ -4,6 +4,7 @@ import {
   Alert,
   Image,
   TouchableHighlight,
+  BackHandler,
 } from 'react-native';
 import Status from './components/Status';
 import MessageList from './components/MessageList';
@@ -13,7 +14,7 @@ import {
   createTextMessage,
 } from './util\
 s/MessageUtils';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function App() {
   const [messages, setMessages] = useState([
@@ -26,6 +27,21 @@ export default function App() {
     }),
   ]);
   const [fullscreenImageId, setFullscreenImageId] = useState(null);
+
+  useEffect(() => {
+    // only for Android device
+    const subscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (fullscreenImageId) {
+          dismissFullscreenImage();
+          return true;
+        }
+        return false;
+      },
+    );
+    return () => subscription.remove();
+  }, []);
 
   const handlePressMessage = ({ id, type }) => {
     switch (type) {
