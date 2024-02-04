@@ -1,8 +1,32 @@
 import { StyleSheet, View, Text } from 'react-native';
 import Status from './components/Status';
+import MessageList from './components/MessageList';
+import {
+  createImageMessage,
+  createLocationMessage,
+  createTextMessage,
+} from './util\
+s/MessageUtils';
+import { useState } from 'react';
 
 export default function App() {
-  const renderMessageList = () => <View style={styles.content}></View>;
+  const [messages, setMessages] = useState([
+    createImageMessage('https://unsplash.it/300/300'),
+    createTextMessage('World'),
+    createTextMessage('Hello'),
+    createLocationMessage({
+      latitude: 37.78825,
+      longitude: -122.4324,
+    }),
+  ]);
+
+  const handlePressMessage = () => {};
+
+  const renderMessageList = () => (
+    <View style={styles.content}>
+      <MessageList messages={messages} onPressMessage={handlePressMessage} />
+    </View>
+  );
 
   const renderInputMethodEditor = () => (
     <View style={styles.inputMethodEditor}></View>
