@@ -1,16 +1,19 @@
 import Constants from 'expo-constants';
-import { useState } from 'react';
-import {
-  NetInfo,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { useState, useEffect } from 'react';
+import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { addEventListener, fetch } from '@react-native-community/netinfo';
 
 const Status = () => {
   const [info, setInfo] = useState(null);
+
+  useEffect(() => {
+    // set up the event listener
+    const unsubscription = addEventListener((state) => setInfo(state.type));
+    // fetch the initial connection information
+    fetch().then((state) => setInfo(state.type));
+
+    return () => unsubscription();
+  }, []);
 
   // assume that if the info is "none" then we’re disconnected
   // and anything else means we’re connected
