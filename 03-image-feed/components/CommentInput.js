@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 
-CommentInput.PropTypes = {
+CommentInput.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
 };
