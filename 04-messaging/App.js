@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text } from 'react-native';
+import Status from './components/Status';
 
 export default function App() {
   const renderMessageList = () => <View style={styles.content}></View>;
@@ -11,6 +12,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Status />
       {renderMessageList()}
       {renderToolbar()}
       {renderInputMethodEditor()}
