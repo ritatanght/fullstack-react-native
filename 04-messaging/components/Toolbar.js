@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const ToolbarButton = ({ title, onPress }) => (
   <TouchableOpacity onPress={onPress}>
@@ -27,12 +27,22 @@ const Toolbar = ({
   onPressLocation,
 }) => {
   const [text, setText] = useState('');
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (isFocused) {
+      inputRef.current.focus();
+    } else {
+      inputRef.current.blur();
+    }
+  }, [isFocused]);
 
   const handleSubmitEditing = () => {
     if (!text) return;
     onSubmit(text);
     setText('');
   };
+
   return (
     <View style={styles.toolbar}>
       <ToolbarButton title={'📷'} onPress={onPressCamera} />
@@ -41,10 +51,15 @@ const Toolbar = ({
         <TextInput
           style={styles.input}
           placeholder="Type something"
-          blurOnSubmit={false}
+          underlineColorAndroid={'transparent'}
+          blurOnSubmit={false} // common in messaging app
           value={text}
           onChangeText={(text) => setText(text)}
           onSubmitEditing={handleSubmitEditing}
+          ref={inputRef}
+          // use onChangeFocus to notify parent of the changes to the focus state
+          onFocus={() => onChangeFocus(true)}
+          onBlur={() => onChangeFocus(false)}
         />
       </View>
     </View>
