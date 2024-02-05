@@ -15,6 +15,7 @@ import {
 } from './util\
 s/MessageUtils';
 import { useState, useEffect } from 'react';
+import Toolbar from './components/Toolbar';
 
 export default function App() {
   const [messages, setMessages] = useState([
@@ -27,6 +28,7 @@ export default function App() {
     }),
   ]);
   const [fullscreenImageId, setFullscreenImageId] = useState(null);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
     // only for Android device
@@ -79,7 +81,24 @@ export default function App() {
     <View style={styles.inputMethodEditor}></View>
   );
 
-  const renderToolbar = () => <View style={styles.toolbar}></View>;
+  const handlePressToolbarCamera = () => {};
+  const handlePressToolbarLocation = () => {};
+  const handleChangeFocus = (isFocused) => setIsInputFocused(isFocused);
+  const handleSubmit = (text) => {
+    setMessages((prev) => [createTextMessage(text), ...prev]);
+  };
+
+  const renderToolbar = () => (
+    <View style={styles.toolbar}>
+      <Toolbar
+        isFocused={isInputFocused}
+        onSubmit={handleSubmit}
+        onChangeFocus={handleChangeFocus}
+        onPressCamera={handlePressToolbarCamera}
+        onPressLocation={handlePressToolbarLocation}
+      />
+    </View>
+  );
 
   const renderFullscreenImage = () => {
     if (!fullscreenImageId) return null;
