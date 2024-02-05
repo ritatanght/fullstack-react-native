@@ -19,7 +19,12 @@ ToolbarButton.propTypes = {
 };
 
 const Toolbar = () => {
-  return <View style={styles.toolbar}></View>;
+  return (
+    <View style={styles.toolbar}>
+      <ToolbarButton title={'📷'} onPress={onPressCamera} />
+      <ToolbarButton title={'📍'} onPress={onPressLocation} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
