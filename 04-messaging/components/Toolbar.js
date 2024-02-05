@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 const ToolbarButton = ({ title, onPress }) => (
   <TouchableOpacity onPress={onPress}>
@@ -18,11 +19,34 @@ ToolbarButton.propTypes = {
   onPress: PropTypes.func.isRequired,
 };
 
-const Toolbar = () => {
+const Toolbar = ({
+  isFocused,
+  onChangeFocus,
+  onSubmit,
+  onPressCamera,
+  onPressLocation,
+}) => {
+  const [text, setText] = useState('');
+
+  const handleSubmitEditing = () => {
+    if (!text) return;
+    onSubmit(text);
+    setText('');
+  };
   return (
     <View style={styles.toolbar}>
       <ToolbarButton title={'📷'} onPress={onPressCamera} />
       <ToolbarButton title={'📍'} onPress={onPressLocation} />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type something"
+          blurOnSubmit={false}
+          value={text}
+          onChangeText={(text) => setText(text)}
+          onSubmitEditing={handleSubmitEditing}
+        />
+      </View>
     </View>
   );
 };
@@ -41,6 +65,20 @@ const styles = StyleSheet.create({
     marginRight: 12,
     fontSize: 20,
     color: 'grey',
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.04)',
+    borderRadius: 16,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    backgroundColor: 'rgba(0,0,0,0.02)',
+  },
+  input: {
+    flex: 1,
+    fontSize: 18,
   },
 });
 
