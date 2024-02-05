@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const Grid = (props) => {
   const renderGridItem = (info) => {
+    const { index } = info;
     const { renderItem, numColumns, itemMargin } = props;
     const { width } = Dimensions.get('window');
     const size = PixelRatio.roundToNearestPixel(
