@@ -64,6 +64,7 @@ export default function App() {
         break;
       case 'image':
         setFullscreenImageId(id);
+        setIsInputFocused(false); // avoid the keyboard stays up in fullscreen image
         break;
       default:
         break;
