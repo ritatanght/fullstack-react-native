@@ -11,14 +11,14 @@ import {
   createImageMessage,
   createLocationMessage,
   createTextMessage,
-  requestLocationPermission,
-} from './util\
-s/MessageUtils';
+} from './utils/MessageUtils';
 import { useState, useEffect } from 'react';
 import Status from './components/Status';
 import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
+import ImageGrid from './components/ImageGrid';
 import * as Location from 'expo-location';
+
 export default function App() {
   const [messages, setMessages] = useState([
     createImageMessage('https://unsplash.it/300/300'),
@@ -81,7 +81,9 @@ export default function App() {
   );
 
   const renderInputMethodEditor = () => (
-    <View style={styles.inputMethodEditor}></View>
+    <View style={styles.inputMethodEditor}>
+      <ImageGrid />
+    </View>
   );
 
   const handlePressToolbarCamera = () => {};
