@@ -6,17 +6,19 @@ import {
   TouchableHighlight,
   BackHandler,
 } from 'react-native';
-import Status from './components/Status';
-import MessageList from './components/MessageList';
+
 import {
   createImageMessage,
   createLocationMessage,
   createTextMessage,
+  requestLocationPermission,
 } from './util\
 s/MessageUtils';
 import { useState, useEffect } from 'react';
+import Status from './components/Status';
+import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
-
+import * as Location from 'expo-location';
 export default function App() {
   const [messages, setMessages] = useState([
     createImageMessage('https://unsplash.it/300/300'),
@@ -83,7 +85,25 @@ export default function App() {
   );
 
   const handlePressToolbarCamera = () => {};
-  const handlePressToolbarLocation = () => {};
+  const handlePressToolbarLocation = async () => {
+    try {
+      // get permission
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') return;
+
+      let position = await Location.getCurrentPositionAsync();
+      const {
+        coords: { latitude, longitude },
+      } = position;
+
+      setMessages((prev) => [
+        createLocationMessage({ latitude, longitude }),
+        ...prev,
+      ]);
+    } catch (error) {
+      console.error('Error requesting location info:', error);
+    }
+  };
   const handleChangeFocus = (isFocused) => setIsInputFocused(isFocused);
   const handleSubmit = (text) => {
     setMessages((prev) => [createTextMessage(text), ...prev]);
