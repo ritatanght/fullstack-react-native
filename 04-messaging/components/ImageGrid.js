@@ -14,12 +14,15 @@ const ImageGrid = ({ onPressImage }) => {
     { uri: 'https://picsum.photos/600/600?image=30' },
     { uri: 'https://picsum.photos/600/600?image=40' },
   ]);
+  const [loading, setLoading] = useState(false);
+  const [cursor, setCursor] = useState(null);
 
   useEffect(() => {
     getImages();
   }, []);
 
-  const getImages = async () => {
+  const getImages = async (after) => {
+    setLoading(true);
     // const { status } = await MediaLibrary.requestPermissionsAsync();
     // if (status !== 'granted') {
     //   console.log('Permission denied');
@@ -29,10 +32,16 @@ const ImageGrid = ({ onPressImage }) => {
     // try {
     //   const results = await CameraRoll.getPhotos({
     //     first: 20,
+    //     after;
     //   });
-    //   const { edges } = results;
-    //   const loadedImages = edges.map((item) => item.node.image);
-    //   setImages(loadedImages);
+    // const {
+    //   edges,
+    //   page_info: { has_next_page, end_cursor },
+    // } = results;
+    // const loadedImages = edges.map((item) => item.node.image);
+    // setImages(loadedImages);
+    setLoading(false);
+    // setCursor(has_next_page ? end_cursor : null);
     // } catch (err) {
     //   console.log(err);
     // }
@@ -43,7 +52,11 @@ const ImageGrid = ({ onPressImage }) => {
     return <Image source={{ uri }} style={style} />;
   };
 
-  const getNextImages = () => {};
+  const getNextImages = () => {
+    if (!cursor) return;
+
+    getImages(cursor);
+  };
 
   return (
     <Grid
