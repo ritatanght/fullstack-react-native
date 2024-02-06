@@ -49,7 +49,16 @@ const ImageGrid = ({ onPressImage }) => {
 
   const renderItem = ({ item: { uri }, size, marginTop, marginLeft }) => {
     const style = { width: size, height: size, marginLeft, marginTop };
-    return <Image source={{ uri }} style={style} />;
+    return (
+      <TouchableOpacity
+        key={uri}
+        activeOpacity={0.75}
+        onPress={() => onPressImage(uri)}
+        style={style}
+      >
+        <Image source={{ uri }} style={styles.image} />;
+      </TouchableOpacity>
+    );
   };
 
   const getNextImages = () => {
