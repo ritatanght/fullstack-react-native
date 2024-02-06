@@ -56,7 +56,7 @@ const ImageGrid = ({ onPressImage }) => {
         onPress={() => onPressImage(uri)}
         style={style}
       >
-        <Image source={{ uri }} style={styles.image} />;
+        <Image source={{ uri }} style={styles.image} />
       </TouchableOpacity>
     );
   };
