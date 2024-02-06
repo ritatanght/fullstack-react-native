@@ -79,10 +79,12 @@ export default function App() {
       <MessageList messages={messages} onPressMessage={handlePressMessage} />
     </View>
   );
+  const handlePressImage = (uri) =>
+    setMessages((prev) => [createImageMessage(uri), ...prev]);
 
   const renderInputMethodEditor = () => (
     <View style={styles.inputMethodEditor}>
-      <ImageGrid />
+      <ImageGrid onPressImage={handlePressImage} />
     </View>
   );
 
