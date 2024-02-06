@@ -1,9 +1,10 @@
-import { CameraRoll, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Permissions } from 'expo';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+// import * as MediaLibrary from 'expo-media-library';
+//import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 
 import Grid from './Grid';
-import { useState } from 'react';
 const keyExtractor = ({ uri }) => uri;
 
 const ImageGrid = ({ onPressImage }) => {
@@ -14,13 +15,43 @@ const ImageGrid = ({ onPressImage }) => {
     { uri: 'https://picsum.photos/600/600?image=40' },
   ]);
 
+  useEffect(() => {
+    getImages();
+  }, []);
+
+  const getImages = async () => {
+    // const { status } = await MediaLibrary.requestPermissionsAsync();
+    // if (status !== 'granted') {
+    //   console.log('Permission denied');
+    //   return;
+    // }
+    // There's problem with the CameraRoll from @react-native-camera-roll/camera-roll
+    // try {
+    //   const results = await CameraRoll.getPhotos({
+    //     first: 20,
+    //   });
+    //   const { edges } = results;
+    //   const loadedImages = edges.map((item) => item.node.image);
+    //   setImages(loadedImages);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  };
+
   const renderItem = ({ item: { uri }, size, marginTop, marginLeft }) => {
     const style = { width: size, height: size, marginLeft, marginTop };
     return <Image source={{ uri }} style={style} />;
   };
 
+  const getNextImages = () => {};
+
   return (
-    <Grid data={images} renderItem={renderItem} keyExtractor={keyExtractor} />
+    <Grid
+      data={images}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+      onEndReached={getNextImages}
+    />
   );
 };
 
